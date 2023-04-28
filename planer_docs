@@ -1,0 +1,36 @@
+--------DT DAY PLANNER -------------------
+This software will be albe to plan my day 
+It will be albe to ::
+	*Create a timetble for a full day 
+		There will be 2 modes 
+	1.normal mode(creating a timetable for tomorrow)
+	2.advanced mode (creatinng a timetable for a selected day)
+
+	*We will push the user to create a timetable
+		This will be a nesecity
+	1.We would auto start the program right after turning on the system 
+	2.We would push notifications to the system to start it 
+
+	*Technologies using
+	1.Sqlite databases
+	2.Pyhton langusge 
+	3.Git integration
+	4.Basic GUI from tkinter 
+
+--------BACKEND DATABASE SCHEMA PLAN---------
+db-name: day_planner.db
+no. of tables - normal_mode 
+		advanced_mode
+
+normal_mode(day_id(auto_incremental),day,hours like--0-1,0-2,0-3......)
+advanced_mode(day_id(auto_incremental),day,hours like -0.1..........)
+
+Further details about the code structure of the project can be seen in uml file !!!!!
+
+
+
+
+
+	
+
+
