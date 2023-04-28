@@ -18,9 +18,9 @@ class MainWindow(QMainWindow):
         image_label.setPixmap(pixmap)
         image_label.setGeometry(0, 0, 350, 300)
 
-        button1 = QPushButton("Normal Mode", self)
-        button1.setGeometry(200, 50, 250, 45)
-        button1.clicked.connect(self.open_window1)
+        normal_mode_button = QPushButton("Normal Mode", self)
+        normal_mode_button.setGeometry(200, 50, 250, 45)
+        normal_mode_button.clicked.connect(self.normal_mode_window)
 
         button2 = QPushButton("Advanced Mode", self)
         button2.setGeometry(200, 100, 250, 45)
@@ -47,48 +47,16 @@ class MainWindow(QMainWindow):
         # Show main window
         self.show()
 
-    def open_window1(self):
-        window1 = QWidget()
-        layout = QVBoxLayout()
-        label = QLabel("This is Window 1")
-        layout.addWidget(label)
-        window1.setLayout(layout)
-        window1.setGeometry(200, 200, 300, 200)
-        window1.show()
+    def normal_mode_window(self):
+        import normal_mode
+        normal_mode.start()
 
     def open_window3(self):
         pass
 
 
     def open_window2(self):
-        window2 = QDialog()
-        layout = QVBoxLayout()
-
-        # Add form fields
-        name_label = QLabel("Name:")
-        name_input = QLineEdit()
-        layout.addWidget(name_label)
-        layout.addWidget(name_input)
-
-        email_label = QLabel("Email:")
-        email_input = QLineEdit()
-        layout.addWidget(email_label)
-        layout.addWidget(email_input)
-
-        phone_label = QLabel("Phone:")
-        phone_input = QLineEdit()
-        layout.addWidget(phone_label)
-        layout.addWidget(phone_input)
-
-        # Add submit button
-        submit_button = QPushButton("Submit")
-        layout.addWidget(submit_button)
-
-        # Set layout
-        window2.setLayout(layout)
-        window2.setWindowTitle("Create day plan for tomorrow ")
-        window2.setGeometry(200, 200, 300, 200)
-        window2.exec()
+        pass
     
 
     def show_about_dialog(self):

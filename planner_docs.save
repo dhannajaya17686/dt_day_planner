@@ -1,0 +1,4 @@
+Generate a pyqt6 form which has:
+	*24 widges to input activity per each hour
+	*a submit button which leads to a functions
+	*that function should be able to store activities per hour
