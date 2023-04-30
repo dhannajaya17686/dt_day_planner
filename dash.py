@@ -14,7 +14,7 @@ class MainWindow(QMainWindow):
 
         # Create widgets
         image_label = QLabel(self)
-        pixmap = QPixmap("dashboard_image.png").scaled(150,175)
+        pixmap = QPixmap("images/dashboard_image.png").scaled(150,175)
         image_label.setPixmap(pixmap)
         image_label.setGeometry(0, 0, 350, 300)
 
@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
 
         button2 = QPushButton("Advanced Mode", self)
         button2.setGeometry(200, 100, 250, 45)
-        button2.clicked.connect(self.open_window2)
+        button2.clicked.connect(self.advanced_mode_window)
 
         button3 = QPushButton("View today", self)
         button3.setGeometry(200, 150, 250, 45)
@@ -48,14 +48,16 @@ class MainWindow(QMainWindow):
         self.show()
 
     def normal_mode_window(self):
-        import normal_mode
-        normal_mode.start()
+        from sub_ui_tools import normal_mode_sub
+        normal_mode_obj=normal_mode_sub()
+        normal_mode_obj.exec()
+        
+    def advanced_mode_window(self):
+        from sub_ui_tools import advanced_mode_sub
+        advanced_mode_obj=advanced_mode_sub()
+        advanced_mode_obj.exec()
 
     def open_window3(self):
-        pass
-
-
-    def open_window2(self):
         pass
     
 

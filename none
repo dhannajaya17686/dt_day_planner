@@ -1,6 +1,0 @@
-generate a pyqt6 script which has:
-	.an image at the left side
-	.has two title buttons at the right side 
-	.when clicked those buttons it should move to a new window
-	.a menu bar which includes a HELP QUIT ABOUT US menus 
-	.when HELP menu is cliked it should lead to a new window
