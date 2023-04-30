@@ -27,7 +27,7 @@ class normal_mode_sub(QDialog):
 
         # Set the window title and show the widget
         self.setWindowTitle("Timetable for tomorrow!")
-        self.setStyleSheet("background-color:#8a96f2;")
+        self.setStyleSheet("background-color:#060d2e;color:#ffffff")
         self.show()
 
 
@@ -74,7 +74,7 @@ class advanced_mode_sub(QDialog):
 
         # Set the window title and show the widget
         self.setWindowTitle("Timetable for a selected day")
-        self.setStyleSheet("background-color:#8a96f2;")
+        self.setStyleSheet("background-color:#060d2e;color:#ffffff")
         self.show()
     
     def submit_activities(self):
@@ -103,7 +103,7 @@ class DatePicker(QDialog):
 
         # Connect the selectionChanged signal to a slot
         self.calendar.selectionChanged.connect(self.return_selected_date)
-        self.setStyleSheet("background-color:#8a96f2;")
+        self.setStyleSheet("background-color:#060d2e;color:#ffffff")
         # Create a layout and add the QCalendarWidget widget to it
         layout = QVBoxLayout()
         layout.addWidget(self.calendar)

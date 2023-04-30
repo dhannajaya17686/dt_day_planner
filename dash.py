@@ -10,13 +10,13 @@ class MainWindow(QMainWindow):
         # Set window properties
         self.setWindowTitle("DT DAY PLANNER")
         self.setGeometry(100, 100, 500, 210)
-        self.setStyleSheet("background-color:#8a96f2;")
+        self.setStyleSheet("background-color:#060d2e;color:#ffffff")
         self.app_icon=QIcon("images/time.png")
         self.setWindowIcon(self.app_icon)
 
         # Create widgets
         image_label = QLabel(self)
-        pixmap = QPixmap("images/dashboard_image.png").scaled(150,175)
+        pixmap = QPixmap("images/dashboard_image.png")
         image_label.setPixmap(pixmap)
         image_label.setGeometry(0, 0, 350, 300)
 
@@ -66,7 +66,7 @@ class MainWindow(QMainWindow):
     def show_about_dialog(self):
         about_dialog = QDialog(self)
         layout = QVBoxLayout()
-        label = QLabel("This is the About Us dialog")
+        label = QLabel("Software Version: 0.0.1\nSoftware Type: Open Source\nDeveloper: DT Software Solutions")
         layout.addWidget(label)
         about_dialog.setLayout(layout)
         about_dialog.setWindowTitle("About Us")
