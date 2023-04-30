@@ -1,16 +1,18 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMenu,QMenuBar, QWidget, QVBoxLayout,QDialog,QLineEdit
-from PyQt6.QtGui import QPixmap,QAction
+from PyQt6.QtGui import QPixmap,QAction,QIcon
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        
+    
         # Set window properties
         self.setWindowTitle("DT DAY PLANNER")
         self.setGeometry(100, 100, 500, 210)
         self.setStyleSheet("background-color:#8a96f2;")
+        self.app_icon=QIcon("images/time.png")
+        self.setWindowIcon(self.app_icon)
 
         # Create widgets
         image_label = QLabel(self)

@@ -33,11 +33,18 @@ class normal_mode_sub(QDialog):
 
     def submit_activities(self):
         # Store the activities in a dictionary
-        activities_dict = {}
+        self.normal_mode_activities_dict = {}
         for i in range(24):
-            activities_dict[i] = self.activities[i].text()
-        print(activities_dict)
-    
+            self.normal_mode_activities_dict[i] = self.activities[i].text()
+        print(self.normal_mode_activities_dict)
+        import datetime
+        current_date = QDate.currentDate()
+        tomorrow_date = current_date.addDays(1)
+        tomorrow_datetime = datetime.datetime(tomorrow_date.year(), tomorrow_date.month(), tomorrow_date.day())
+        tomorrow_string = tomorrow_datetime.strftime('%Y-%m-%d')
+        self.normal_mode_activities_dict['tomorrow_date']=tomorrow_string
+        print(self.normal_mode_activities_dict)
+
 class advanced_mode_sub(QDialog):
     def __init__(self):
         super().__init__()
