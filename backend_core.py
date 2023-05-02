@@ -23,7 +23,7 @@ class Backend_core_module:
         Initializes an instance of the Backend_core_module class.
         """
         self.DATABASE_NAME="day_planner.db"
-        self.HOUR_LIST=[str(i) for i in range (24)]
+        self.HOUR_LIST=[f"hour_{i}_00" for i in range (24)]
         self.IMAGE_PATH="images"
         self.IMAGE_DASH="images/dashboard_image.png"
         self.IMAGE_ICON="images/time.png"
@@ -32,6 +32,8 @@ class Backend_core_module:
         self.NORMAL_MODE_TABLE_NAME="normal_mode"
         self.DAY_COLUMN="date"
         self.ADVANCED_MODE_TABLE_NAME="advanced_mode"
+        self.db_connection=sql.connect(self.DATABASE_NAME)
+        self.db_cursor=self.db_connection.cursor()  
 
 
     def images_dir_creator(self)->bool:
@@ -107,6 +109,7 @@ class Backend_core_module:
         The table columns are the day of the week and 24 hours of the day.
         Returns True if the table was created successfully, False otherwise.
         """
+        print(self.HOUR_LIST)
         self.sql_query_normal_table_add=f"CREATE TABLE IF NOT EXISTS {self.NORMAL_MODE_TABLE_NAME}(day_id INTEGER PRIMARY KEY AUTOINCREMENT, {self.DAY_COLUMN} CHAR(50) NOT NULL,{self.HOUR_LIST[0]} VARCHAR(255), {self.HOUR_LIST[1]} VARCHAR(255), {self.HOUR_LIST[2]} VARCHAR(255), {self.HOUR_LIST[3]} VARCHAR(255), {self.HOUR_LIST[4]} VARCHAR(255), {self.HOUR_LIST[5]} VARCHAR(255), {self.HOUR_LIST[6]} VARCHAR(255), {self.HOUR_LIST[7]} VARCHAR(255), {self.HOUR_LIST[8]} VARCHAR(255), {self.HOUR_LIST[9]} VARCHAR(255), {self.HOUR_LIST[10]} VARCHAR(255), {self.HOUR_LIST[11]} VARCHAR(255), {self.HOUR_LIST[12]} VARCHAR(255), {self.HOUR_LIST[13]} VARCHAR(255), {self.HOUR_LIST[14]} VARCHAR(255), {self.HOUR_LIST[15]} VARCHAR(255), {self.HOUR_LIST[16]} VARCHAR(255), {self.HOUR_LIST[17]} VARCHAR(255), {self.HOUR_LIST[18]} VARCHAR(255), {self.HOUR_LIST[19]} VARCHAR(255), {self.HOUR_LIST[20]} VARCHAR(255), {self.HOUR_LIST[21]} VARCHAR(255), {self.HOUR_LIST[22]} VARCHAR(255), {self.HOUR_LIST[23]} VARCHAR(255))"
         self.db_cursor.execute(self.sql_query_normal_table_add)
         self.db_connection.commit()
@@ -170,3 +173,6 @@ class Backend_core_module:
 
     def advanced_mode_show(db_name:str,date:str,self)->list:
         pass
+
+    
+x=Backend_core_module()

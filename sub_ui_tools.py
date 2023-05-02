@@ -1,8 +1,10 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton,QDialog,QMessageBox,QVBoxLayout,QCalendarWidget
 from PyQt6.QtCore import QDate
-
+from backend_core import Backend_core_module
+backend_cur=Backend_core_module()
 class normal_mode_sub(QDialog):
+
     def __init__(self):
         super().__init__()
 
@@ -14,11 +16,14 @@ class normal_mode_sub(QDialog):
         self.activities = {}
         for j in range(3):
             for i in range(8):
-                time_label = QLabel(str(i + j*8) + ":00")
+                time_label = QLabel(str(i + j*8) +":00")
                 grid.addWidget(time_label, i, j*2)
                 input_box = QLineEdit()
                 grid.addWidget(input_box, i, j*2 + 1)
                 self.activities[(i + j*8)] = input_box
+        
+        
+                
 
         # Create the submit butto
         submit_button = QPushButton("Submit")
@@ -43,7 +48,13 @@ class normal_mode_sub(QDialog):
         tomorrow_datetime = datetime.datetime(tomorrow_date.year(), tomorrow_date.month(), tomorrow_date.day())
         tomorrow_string = tomorrow_datetime.strftime('%Y-%m-%d')
         self.normal_mode_activities_dict['tomorrow_date']=tomorrow_string
+        for key,valuie in self.normal_mode_activities_dict.items():
+            if self.normal_mode_activities_dict[key]=='':
+                self.normal_mode_activities_dict[key]='no_activity'
+            else:
+                pass
         print(self.normal_mode_activities_dict)
+        backend_cur.normal_mode_submitter(self.normal_mode_activities_dict)
 
 class advanced_mode_sub(QDialog):
     def __init__(self):
