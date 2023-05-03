@@ -129,30 +129,29 @@ class Backend_core_module:
 
     def normal_mode_submitter(self)->bool:
         """
-        Submits a new row of activity data to the normal mode table.
-        The data is provided as a dictionary with 24 keys corresponding to the
-        24 hours of the day.
-        Returns True if the row was added successfully, False otherwise.
+        Inserts the values in `self.normal_mode_activity_dict` to the advanced mode table for the selected date.
+    
+        Returns:
+        bool: True if the insertion is successful, False otherwise.
         """
-        self.normal_table_add=f"INSERT INTO {self.NORMAL_MODE_TABLE_NAME}({self.DAY_COLUMN}, {self.HOUR_LIST[0]}, {self.HOUR_LIST[1]}, {self.HOUR_LIST[2]}, {self.HOUR_LIST[3]}, {self.HOUR_LIST[4]}, {self.HOUR_LIST[5]}, {self.HOUR_LIST[6]}, {self.HOUR_LIST[7]}, {self.HOUR_LIST[8]}, {self.HOUR_LIST[9]}, {self.HOUR_LIST[10]}, {self.HOUR_LIST[11]}, {self.HOUR_LIST[12]}, {self.HOUR_LIST[13]}, {self.HOUR_LIST[14]}, {self.HOUR_LIST[15]}, {self.HOUR_LIST[16]}, {self.HOUR_LIST[17]}, {self.HOUR_LIST[18]}, {self.HOUR_LIST[19]}, {self.HOUR_LIST[20]}, {self.HOUR_LIST[21]}, {self.HOUR_LIST[22]}, {self.HOUR_LIST[23]}) VALUES ({activity_dic['tomorrow_date']}, {activity_dic[0]}, {activity_dic[1]}, {activity_dic[2]}, {activity_dic[3]}, {activity_dic[4]}, {activity_dic[5]}, {activity_dic[6]}, {activity_dic[7]}, {activity_dic[8]}, {activity_dic[9]}, {activity_dic[10]}, {activity_dic[11]}, {activity_dic[12]}, {activity_dic[13]}, {activity_dic[14]}, {activity_dic[15]}, {activity_dic[16]}, {activity_dic[17]}, {activity_dic[18]}, {activity_dic[19]}, {activity_dic[20]}, {activity_dic[21]}, {activity_dic[22]}, {activity_dic[23]});"
+        self.normal_table_add = f"INSERT INTO {self.NORMAL_MODE_TABLE_NAME}({self.DAY_COLUMN}, {self.HOUR_LIST[0]}, {self.HOUR_LIST[1]}, {self.HOUR_LIST[2]}, {self.HOUR_LIST[3]}, {self.HOUR_LIST[4]}, {self.HOUR_LIST[5]}, {self.HOUR_LIST[6]}, {self.HOUR_LIST[7]}, {self.HOUR_LIST[8]}, {self.HOUR_LIST[9]}, {self.HOUR_LIST[10]}, {self.HOUR_LIST[11]}, {self.HOUR_LIST[12]}, {self.HOUR_LIST[13]}, {self.HOUR_LIST[14]}, {self.HOUR_LIST[15]}, {self.HOUR_LIST[16]}, {self.HOUR_LIST[17]}, {self.HOUR_LIST[18]}, {self.HOUR_LIST[19]}, {self.HOUR_LIST[20]}, {self.HOUR_LIST[21]}, {self.HOUR_LIST[22]}, {self.HOUR_LIST[23]}) VALUES ({self.normal_mode_activity_dict['tomorrow_date']}, {self.normal_mode_activity_dict[0]}, {self.normal_mode_activity_dict[1]}, {self.normal_mode_activity_dict[2]}, {self.normal_mode_activity_dict[3]}, {self.normal_mode_activity_dict[4]}, {self.normal_mode_activity_dict[5]}, {self.normal_mode_activity_dict[6]}, {self.normal_mode_activity_dict[7]}, {self.normal_mode_activity_dict[8]}, {self.normal_mode_activity_dict[9]}, {self.normal_mode_activity_dict[10]}, {self.normal_mode_activity_dict[11]}, {self.normal_mode_activity_dict[12]}, {self.normal_mode_activity_dict[13]}, {self.normal_mode_activity_dict[14]}, {self.normal_mode_activity_dict[15]}, {self.normal_mode_activity_dict[16]}, {self.normal_mode_activity_dict[17]}, {self.normal_mode_activity_dict[18]}, {self.normal_mode_activity_dict[19]}, {self.normal_mode_activity_dict[20]}, {self.normal_mode_activity_dict[21]}, {self.normal_mode_activity_dict[22]}, {self.normal_mode_activity_dict[23]});"
         self.db_cursor.execute(self.normal_table_add)
         self.db_connection.commit()
         return True
 
-    def advanced_mode_submitter(self)->bool:
+    def advanced_mode_submitter(self) -> bool:
         """
-        Inserts the values in `activity_dic` to the advanced mode table for the selected date.
+        Inserts the values in `self.advanced_mode_activity_dict` to the advanced mode table for the selected date.
     
-        Args:
-            activity_dic (dict): A dictionary containing the activities to be added to the advanced mode table.
-        
         Returns:
             bool: True if the insertion is successful, False otherwise.
         """
-        self.advanced_table_add=f"INSERT INTO {self.ADVANCED_MODE_TABLE_NAME}({self.DAY_COLUMN}, {self.HOUR_LIST[0]}, {self.HOUR_LIST[1]}, {self.HOUR_LIST[2]}, {self.HOUR_LIST[3]}, {self.HOUR_LIST[4]}, {self.HOUR_LIST[5]}, {self.HOUR_LIST[6]}, {self.HOUR_LIST[7]}, {self.HOUR_LIST[8]}, {self.HOUR_LIST[9]}, {self.HOUR_LIST[10]}, {self.HOUR_LIST[11]}, {self.HOUR_LIST[12]}, {self.HOUR_LIST[13]}, {self.HOUR_LIST[14]}, {self.HOUR_LIST[15]}, {self.HOUR_LIST[16]}, {self.HOUR_LIST[17]}, {self.HOUR_LIST[18]}, {self.HOUR_LIST[19]}, {self.HOUR_LIST[20]}, {self.HOUR_LIST[21]}, {self.HOUR_LIST[22]}, {self.HOUR_LIST[23]}) VALUES ({activity_dic['selected_date']}, {activity_dic[0]}, {activity_dic[1]}, {activity_dic[2]}, {activity_dic[3]}, {activity_dic[4]}, {activity_dic[5]}, {activity_dic[6]}, {activity_dic[7]}, {activity_dic[8]}, {activity_dic[9]}, {activity_dic[10]}, {activity_dic[11]}, {activity_dic[12]}, {activity_dic[13]}, {activity_dic[14]}, {activity_dic[15]}, {activity_dic[16]}, {activity_dic[17]}, {activity_dic[18]}, {activity_dic[19]}, {activity_dic[20]}, {activity_dic[21]}, {activity_dic[22]}, {activity_dic[23]});"
+        self.advanced_table_add = f"INSERT INTO {self.ADVANCED_MODE_TABLE_NAME}({self.DAY_COLUMN}, {self.HOUR_LIST[0]}, {self.HOUR_LIST[1]}, {self.HOUR_LIST[2]}, {self.HOUR_LIST[3]}, {self.HOUR_LIST[4]}, {self.HOUR_LIST[5]}, {self.HOUR_LIST[6]}, {self.HOUR_LIST[7]}, {self.HOUR_LIST[8]}, {self.HOUR_LIST[9]}, {self.HOUR_LIST[10]}, {self.HOUR_LIST[11]}, {self.HOUR_LIST[12]}, {self.HOUR_LIST[13]}, {self.HOUR_LIST[14]}, {self.HOUR_LIST[15]}, {self.HOUR_LIST[16]}, {self.HOUR_LIST[17]}, {self.HOUR_LIST[18]}, {self.HOUR_LIST[19]}, {self.HOUR_LIST[20]}, {self.HOUR_LIST[21]}, {self.HOUR_LIST[22]}, {self.HOUR_LIST[23]}) VALUES ({self.advanced_mode_activity_dict['selected_date']}, {self.advanced_mode_activity_dict[0]}, {self.advanced_mode_activity_dict[1]}, {self.advanced_mode_activity_dict[2]}, {self.advanced_mode_activity_dict[3]}, {self.advanced_mode_activity_dict[4]}, {self.advanced_mode_activity_dict[5]}, {self.advanced_mode_activity_dict[6]}, {self.advanced_mode_activity_dict[7]}, {self.advanced_mode_activity_dict[8]}, {self.advanced_mode_activity_dict[9]}, {self.advanced_mode_activity_dict[10]}, {self.advanced_mode_activity_dict[11]}, {self.advanced_mode_activity_dict[12]}, {self.advanced_mode_activity_dict[13]}, {self.advanced_mode_activity_dict[14]}, {self.advanced_mode_activity_dict[15]}, {self.advanced_mode_activity_dict[16]}, {self.advanced_mode_activity_dict[17]}, {self.advanced_mode_activity_dict[18]}, {self.advanced_mode_activity_dict[19]}, {self.advanced_mode_activity_dict[20]}, {self.advanced_mode_activity_dict[21]}, {self.advanced_mode_activity_dict[22]}, {self.advanced_mode_activity_dict[23]});"
         self.db_cursor.execute(self.advanced_table_add)
         self.db_connection.commit()
         return True
+
+        
     
     def normal_mode_show(self)->list:
         """
@@ -175,6 +174,17 @@ class Backend_core_module:
     def advanced_mode_show(db_name:str,date:str,self)->list:
         pass
 
+    def test_table_creator(self):
+        test=f"CREATE TABLE IF NOT EXISTS test (day_id INTEGER PRIMARY KEY AUTOINCREMENT, {self.DAY_COLUMN} CHAR(50) NOT NULL,{self.HOUR_LIST[0]} VARCHAR(255))"
+        self.db_cursor.execute(test)
+        self.db_connection.commit()
+        return True
+    def test_table_submitter(self):
+        test_sub = f"INSERT INTO test({self.DAY_COLUMN}, {self.HOUR_LIST[0]}) VALUES ({self.normal_mode_activity_dict['tomorrow_date']}, {self.normal_mode_activity_dict[0]});"
+        self.db_cursor.execute(test_sub)
+        self.db_connection.commit()
+        return True
+
+
     
 x=Backend_core_module()
-x.advanced_mode_creator()
