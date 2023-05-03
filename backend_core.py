@@ -33,7 +33,9 @@ class Backend_core_module:
         self.DAY_COLUMN="date"
         self.ADVANCED_MODE_TABLE_NAME="advanced_mode"
         self.db_connection=sql.connect(self.DATABASE_NAME)
-        self.db_cursor=self.db_connection.cursor()  
+        self.db_cursor=self.db_connection.cursor()
+        self.normal_mode_activity_dict={}
+        self.advanced_mode_activity_dict={}  
 
 
     def images_dir_creator(self)->bool:
@@ -109,7 +111,6 @@ class Backend_core_module:
         The table columns are the day of the week and 24 hours of the day.
         Returns True if the table was created successfully, False otherwise.
         """
-        print(self.HOUR_LIST)
         self.sql_query_normal_table_add=f"CREATE TABLE IF NOT EXISTS {self.NORMAL_MODE_TABLE_NAME}(day_id INTEGER PRIMARY KEY AUTOINCREMENT, {self.DAY_COLUMN} CHAR(50) NOT NULL,{self.HOUR_LIST[0]} VARCHAR(255), {self.HOUR_LIST[1]} VARCHAR(255), {self.HOUR_LIST[2]} VARCHAR(255), {self.HOUR_LIST[3]} VARCHAR(255), {self.HOUR_LIST[4]} VARCHAR(255), {self.HOUR_LIST[5]} VARCHAR(255), {self.HOUR_LIST[6]} VARCHAR(255), {self.HOUR_LIST[7]} VARCHAR(255), {self.HOUR_LIST[8]} VARCHAR(255), {self.HOUR_LIST[9]} VARCHAR(255), {self.HOUR_LIST[10]} VARCHAR(255), {self.HOUR_LIST[11]} VARCHAR(255), {self.HOUR_LIST[12]} VARCHAR(255), {self.HOUR_LIST[13]} VARCHAR(255), {self.HOUR_LIST[14]} VARCHAR(255), {self.HOUR_LIST[15]} VARCHAR(255), {self.HOUR_LIST[16]} VARCHAR(255), {self.HOUR_LIST[17]} VARCHAR(255), {self.HOUR_LIST[18]} VARCHAR(255), {self.HOUR_LIST[19]} VARCHAR(255), {self.HOUR_LIST[20]} VARCHAR(255), {self.HOUR_LIST[21]} VARCHAR(255), {self.HOUR_LIST[22]} VARCHAR(255), {self.HOUR_LIST[23]} VARCHAR(255))"
         self.db_cursor.execute(self.sql_query_normal_table_add)
         self.db_connection.commit()
@@ -126,7 +127,7 @@ class Backend_core_module:
         self.db_connection.commit()
         return True
 
-    def normal_mode_submitter(self,activity_dic:dict)->bool:
+    def normal_mode_submitter(self)->bool:
         """
         Submits a new row of activity data to the normal mode table.
         The data is provided as a dictionary with 24 keys corresponding to the
@@ -138,7 +139,7 @@ class Backend_core_module:
         self.db_connection.commit()
         return True
 
-    def advanced_mode_submitter(self,activity_dic:dict)->bool:
+    def advanced_mode_submitter(self)->bool:
         """
         Inserts the values in `activity_dic` to the advanced mode table for the selected date.
     
@@ -149,7 +150,7 @@ class Backend_core_module:
             bool: True if the insertion is successful, False otherwise.
         """
         self.advanced_table_add=f"INSERT INTO {self.ADVANCED_MODE_TABLE_NAME}({self.DAY_COLUMN}, {self.HOUR_LIST[0]}, {self.HOUR_LIST[1]}, {self.HOUR_LIST[2]}, {self.HOUR_LIST[3]}, {self.HOUR_LIST[4]}, {self.HOUR_LIST[5]}, {self.HOUR_LIST[6]}, {self.HOUR_LIST[7]}, {self.HOUR_LIST[8]}, {self.HOUR_LIST[9]}, {self.HOUR_LIST[10]}, {self.HOUR_LIST[11]}, {self.HOUR_LIST[12]}, {self.HOUR_LIST[13]}, {self.HOUR_LIST[14]}, {self.HOUR_LIST[15]}, {self.HOUR_LIST[16]}, {self.HOUR_LIST[17]}, {self.HOUR_LIST[18]}, {self.HOUR_LIST[19]}, {self.HOUR_LIST[20]}, {self.HOUR_LIST[21]}, {self.HOUR_LIST[22]}, {self.HOUR_LIST[23]}) VALUES ({activity_dic['selected_date']}, {activity_dic[0]}, {activity_dic[1]}, {activity_dic[2]}, {activity_dic[3]}, {activity_dic[4]}, {activity_dic[5]}, {activity_dic[6]}, {activity_dic[7]}, {activity_dic[8]}, {activity_dic[9]}, {activity_dic[10]}, {activity_dic[11]}, {activity_dic[12]}, {activity_dic[13]}, {activity_dic[14]}, {activity_dic[15]}, {activity_dic[16]}, {activity_dic[17]}, {activity_dic[18]}, {activity_dic[19]}, {activity_dic[20]}, {activity_dic[21]}, {activity_dic[22]}, {activity_dic[23]});"
-        self.db_cursor.execute(self.normal_table_add)
+        self.db_cursor.execute(self.advanced_table_add)
         self.db_connection.commit()
         return True
     
@@ -176,3 +177,4 @@ class Backend_core_module:
 
     
 x=Backend_core_module()
+x.advanced_mode_creator()
