@@ -51,8 +51,11 @@ class normal_mode_sub(QDialog):
                 backend_cur.normal_mode_activity_dict[key]='no_activity'
             else:
                 pass
-        print(backend_cur.normal_mode_activity_dict)
-        backend_cur.test_table_submitter()
+        backend_cur.normal_mode_submitter()
+        if backend_cur.normal_mode_submitter()==True:
+            ui_message_api().info_msg('Success!','Data Inserted correctly!')
+        else:
+            ui_message_api().warning_msg('Warning','Data not inserted!')
 
 class advanced_mode_sub(QDialog):
     def __init__(self):
@@ -89,22 +92,26 @@ class advanced_mode_sub(QDialog):
     def submit_activities(self):
         # Store the activities in a dictionary
         for i in range(24):
-            self.advanced_mode_activities_dict[i] = self.activities[i].text()
-        for key,value in self.advanced_mode_activities_dict.items():
-            if self.advanced_mode_activities_dict[key]=='':
-                self.advanced_mode_activities_dict[key]='no_activity'
+            backend_cur.advanced_mode_activity_dict[i] = self.activities[i].text()
+        for key,value in backend_cur.advanced_mode_activity_dict.items():
+            if backend_cur.advanced_mode_activity_dict[key]=='':
+                backend_cur.advanced_mode_activity_dict[key]='no_activity'
             else:
                 pass
-        print(self.advanced_mode_activities_dict)
-        backend_cur.advanced_mode_submitter(self.advanced_mode_activities_dict)
+        try:
+            if backend_cur.advanced_mode_submitter()==True:
+                ui_message_api().info_msg('Success!','Data inserted successfully!')
+        except KeyError:
+            ui_message_api().warning_msg('Warning!','Please pick a date before submitting!')
         
     
     def date_picker_function(self):
         #store a date to my activities
         date_picker_app=DatePicker()
         date_picker_app.exec()
-        self.advanced_mode_activities_dict['selected_date']=date_picker_app.return_selected_date()
-        
+        backend_cur.advanced_mode_activity_dict['selected_date']=date_picker_app.return_selected_date()
+    
+
 
 class DatePicker(QDialog):
 
@@ -139,3 +146,21 @@ class DatePicker(QDialog):
             return self.selected_date.toString('yyyy-MM-dd')
         else:
             pass
+
+class ui_message_api():
+    def __init__(self):
+        self.msg_obj=QMessageBox()
+    
+    def info_msg(self,title:str,text:str)->True:
+        self.msg_obj.setIcon(QMessageBox.Icon.Information)
+        self.msg_obj.setWindowTitle(title)
+        self.msg_obj.setText(text)
+        self.msg_obj.exec()
+        return True
+    
+    def warning_msg(self,title:str,text:str)->True:
+        self.msg_obj.setIcon(QMessageBox.Icon.Warning)
+        self.msg_obj.setWindowTitle(title)
+        self.msg_obj.setText(text)
+        self.msg_obj.exec()
+        return True

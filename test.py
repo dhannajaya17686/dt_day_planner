@@ -1,54 +1,27 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QProgressBar, QPushButton
-from PyQt6.QtCore import Qt, QBasicTimer
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QGridLayout
 
-class ProgressBarDemo(QWidget):
-    def __init__(self):
-        super().__init__()
-
+class ActivityWindow(QWidget):
+    def __init__(self, activities, parent=None):
+        super().__init__(parent)
+        self.activities = activities
         self.initUI()
-
+    
     def initUI(self):
-        self.setGeometry(100, 100, 300, 150)
-        self.setWindowTitle('Progress Bar Demo')
-
-        self.progress = QProgressBar(self)
-        self.progress.setGeometry(50, 50, 200, 20)
-
-        self.start_button = QPushButton('Start', self)
-        self.start_button.move(50, 90)
-        self.start_button.clicked.connect(self.startProgress)
-
-        self.stop_button = QPushButton('Stop', self)
-        self.stop_button.move(160, 90)
-        self.stop_button.clicked.connect(self.stopProgress)
-
-        self.timer = QBasicTimer()
-        self.step = 0
-
+        grid = QGridLayout()
+        for i in range(24):
+            hour_label = QLabel(f"{i}:00 - {i+1}:00")
+            activity_label = QLabel(self.activities[i])
+            grid.addWidget(hour_label, i % 12, i // 12 * 2)
+            grid.addWidget(activity_label, i % 12, i // 12 * 2 + 1)
+        
+        self.setLayout(grid)
+        self.setWindowTitle('Activities for the day')
         self.show()
-
-    def startProgress(self):
-        if self.timer.isActive():
-            return
-
-        self.timer.start(100, self)
-
-    def stopProgress(self):
-        if self.timer.isActive():
-            self.timer.stop()
-            self.step = 0
-            self.progress.setValue(0)
-
-    def timerEvent(self, event):
-        if self.step >= 100:
-            self.timer.stop()
-            return
-
-        self.step += 1
-        self.progress.setValue(self.step)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    demo = ProgressBarDemo()
+    activities = ['Sleep', 'Work', 'Lunch', 'Meeting', 'Work', 'Work', 'Work', 'Break', 'Work', 'Work', 'Dinner', 'Relax',
+                  'Sleep', 'Work', 'Lunch', 'Meeting', 'Work', 'Work', 'Work', 'Break', 'Work', 'Work', 'Dinner', 'Relax']
+    activity_window = ActivityWindow(activities)
     sys.exit(app.exec())

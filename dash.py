@@ -16,7 +16,7 @@ class MainWindow(QMainWindow):
 
         # Create widgets
         image_label = QLabel(self)
-        pixmap = QPixmap("images/dashboard_image.png")
+        pixmap = QPixmap("images/dashboard_image.png")  
         image_label.setPixmap(pixmap)
         image_label.setGeometry(0, 0, 350, 300)
 
@@ -58,6 +58,7 @@ class MainWindow(QMainWindow):
         from sub_ui_tools import advanced_mode_sub
         advanced_mode_obj=advanced_mode_sub()
         advanced_mode_obj.exec()
+        
 
     def open_window3(self):
         pass
