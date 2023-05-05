@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import os
 from PyQt6.QtCore import QDate
+import datetime
 class Backend_core_module:
     """
     This class represents the core module of the day planner application's backend.
@@ -163,13 +164,28 @@ class Backend_core_module:
             A list of tuples containing the records for the current date. Each tuple contains the values for a single row in the table.
         """
         self.normal_result_list=[]
-        self.normal_view_all=f"SELECT * FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}={QDate.currentDate().toString('yyyy-MM-dd')};"
+        self.normal_view_all=f"SELECT * FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{QDate.currentDate().toString('yyyy-MM-dd')}';"
         query_obj=self.db_cursor.execute(self.normal_view_all)
         for items in query_obj:
             converted_item=list(items)
             self.normal_result_list.append(converted_item)
         return self.normal_result_list
 
+    def tomorrow_checker(self):
+        current_date = QDate.currentDate()
+        tomorrow_date = current_date.addDays(1)
+        tomorrow_datetime = datetime.datetime(tomorrow_date.year(), tomorrow_date.month(), tomorrow_date.day())
+        self.tomorrow_string = tomorrow_datetime.strftime('%Y-%m-%d')
+        self.tomorrow_check=f"SELECT * from {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"      
+        self.db_cursor.execute(self.tomorrow_check)
+        self.db_connection.commit()
+        return True
+    
+    def tomorrow_remover(self):
+        self.tomorrow_remover=f"DELETE * FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"
+        self.db_cursor.execute(self.tomorrow_remover)
+        self.db_connection.commit()
+        return True
 
     def advanced_mode_show(db_name:str,date:str,self)->list:
         pass
@@ -185,6 +201,7 @@ class Backend_core_module:
         self.db_connection.commit()
         return True
     """
-
     
 x=Backend_core_module()
+print(x.normal_mode_show())
+print(QDate.currentDate().toString('yyyy-MM-dd'))

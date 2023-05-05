@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
 
         button3 = QPushButton("View today", self)
         button3.setGeometry(200, 150, 250, 45)
-        button3.clicked.connect(self.open_window3)
+        button3.clicked.connect(self.view_activity_window)
 
         # Create menu bar
         menu_bar = self.menuBar()
@@ -60,8 +60,10 @@ class MainWindow(QMainWindow):
         advanced_mode_obj.exec()
         
 
-    def open_window3(self):
-        pass
+    def view_activity_window(self):
+        from sub_ui_tools import View_activity_today
+        normal_act_obj=View_activity_today()
+        normal_act_obj.exec()
     
 
     def show_about_dialog(self):

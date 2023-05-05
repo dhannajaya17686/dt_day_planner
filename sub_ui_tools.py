@@ -20,10 +20,7 @@ class normal_mode_sub(QDialog):
                 grid.addWidget(time_label, i, j*2)
                 input_box = QLineEdit()
                 grid.addWidget(input_box, i, j*2 + 1)
-                self.activities[(i + j*8)] = input_box
-        
-        
-                
+                self.activities[(i + j*8)] = input_box  
 
         # Create the submit butto
         submit_button = QPushButton("Submit")
@@ -51,11 +48,21 @@ class normal_mode_sub(QDialog):
                 backend_cur.normal_mode_activity_dict[key]='no_activity'
             else:
                 pass
+        backend_cur.tomorrow_checker()
+        if backend_cur.tomorrow_checker()==True:
+            reply=ui_message_api().ask_message_box('Warning!','Another record found for this date would you like to delte it?')
+            if reply==QMessageBox.StandardButton.Yes:
+                backend_cur.tomorrow_remover()
+            else:
+                pass
         backend_cur.normal_mode_submitter()
         if backend_cur.normal_mode_submitter()==True:
             ui_message_api().info_msg('Success!','Data Inserted correctly!')
         else:
             ui_message_api().warning_msg('Warning','Data not inserted!')
+        
+        
+
 
 class advanced_mode_sub(QDialog):
     def __init__(self):
@@ -164,3 +171,28 @@ class ui_message_api():
         self.msg_obj.setText(text)
         self.msg_obj.exec()
         return True
+    
+    def ask_message_box(self,title:str,text:str)->True:
+        msg_box = QMessageBox(QMessageBox.Icon.Question,{title},{text})
+        msg_box.addButton(QMessageBox.StandardButton.Yes)
+        msg_box.addButton(QMessageBox.StandardButton.No)
+        return msg_box.exec()
+
+    
+class View_activity_today(QDialog):
+    def __init__(self,parent=None):
+        super().__init__(parent)
+        self.activities = backend_cur.normal_mode_show()[0]
+        self.initUI()
+    
+    def initUI(self):
+        grid = QGridLayout()
+        for i in range(24):
+            hour_label = QLabel(f"{i}:00 - {i+1}:00")
+            activity_label = QLabel(self.activities[i])
+            grid.addWidget(hour_label, i % 12, i // 12 * 2)
+            grid.addWidget(activity_label, i % 12, i // 12 * 2 + 1)
+        
+        self.setLayout(grid)
+        self.setWindowTitle('Activities for the day')
+        self.show()
