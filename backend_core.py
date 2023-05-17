@@ -170,6 +170,23 @@ class Backend_core_module:
             converted_item=list(items)
             self.normal_result_list.append(converted_item)
         return self.normal_result_list
+    
+    def today_activities_show(self)->list:
+        """
+        Retrieves all the records from the NORMAL_MODE_TABLE_NAME table for the current date and returns them as a list.
+
+        Returns:
+        -------
+        list:
+            A list of tuples containing the records for the current date. Each tuple contains the values for a single row in the table.
+        """
+        self.today_result_list=[]
+        self.today_view_all=f"SELECT * FROM {self.ADVANCED_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{QDate.currentDate().toString('yyyy-MM-dd')}';"
+        query_obj=self.db_cursor.execute(self.today_view_all)
+        for items in query_obj:
+            converted_item=list(items)
+            self.today_result_list.append(converted_item)
+        return self.today_result_list
 
     def tomorrow_checker(self):
         current_date = QDate.currentDate()
@@ -202,6 +219,5 @@ class Backend_core_module:
         return True
     """
     
-x=Backend_core_module()
-print(x.normal_mode_show())
-print(QDate.currentDate().toString('yyyy-MM-dd'))
+#x=Backend_core_module()
+#print(x.today_activities_show()[0][2:26])

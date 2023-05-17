@@ -182,17 +182,28 @@ class ui_message_api():
 class View_activity_today(QDialog):
     def __init__(self,parent=None):
         super().__init__(parent)
-        self.activities = backend_cur.normal_mode_show()[0]
         self.initUI()
     
     def initUI(self):
         grid = QGridLayout()
-        for i in range(24):
-            hour_label = QLabel(f"{i}:00 - {i+1}:00")
-            activity_label = QLabel(self.activities[i])
-            grid.addWidget(hour_label, i % 12, i // 12 * 2)
-            grid.addWidget(activity_label, i % 12, i // 12 * 2 + 1)
-        
+        try:           
+            for i in range(24):
+                self.activities_normal = backend_cur.normal_mode_show()[0][2:26]
+                hour_label = QLabel(f"{i}:00 - {i+1}:00")
+                activity_label = QLabel(self.activities_normal[i])
+                grid.addWidget(hour_label, i % 12, i // 12 * 2)
+                grid.addWidget(activity_label, i % 12, i // 12 * 2 + 1)
+        except IndexError:
+            try:
+                for i in range(24):
+                    self.activities_override=backend_cur.today_activities_show()[0][2:26]
+                    hour_label = QLabel(f"{i}:00 - {i+1}:00")
+                    activity_label = QLabel(self.activities_override[i])
+                    grid.addWidget(hour_label, i % 12, i // 12 * 2)
+                    grid.addWidget(activity_label, i % 12, i // 12 * 2 + 1)
+            except IndexError:
+                ui_message_api().warning_msg('Warning','You have no activities for today!\nIn case if you have forgotten to add activities to today do it using advanced mode')
+
         self.setLayout(grid)
         self.setWindowTitle('Activities for the day')
         self.show()
