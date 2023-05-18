@@ -199,7 +199,7 @@ class Backend_core_module:
         return True
     
     def tomorrow_remover(self):
-        self.tomorrow_remover=f"DELETE * FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"
+        self.tomorrow_remover=f"DELETE FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"
         self.db_cursor.execute(self.tomorrow_remover)
         self.db_connection.commit()
         return True
@@ -219,5 +219,5 @@ class Backend_core_module:
         return True
     """
     
-#x=Backend_core_module()
-#print(x.today_activities_show()[0][2:26])
+x=Backend_core_module()
+

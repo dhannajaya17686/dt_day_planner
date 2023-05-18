@@ -53,13 +53,15 @@ class normal_mode_sub(QDialog):
             reply=ui_message_api().ask_message_box('Warning!','Another record found for this date would you like to delte it?')
             if reply==QMessageBox.StandardButton.Yes:
                 backend_cur.tomorrow_remover()
+                backend_cur.normal_mode_submitter()
             else:
                 pass
-        backend_cur.normal_mode_submitter()
-        if backend_cur.normal_mode_submitter()==True:
-            ui_message_api().info_msg('Success!','Data Inserted correctly!')
         else:
-            ui_message_api().warning_msg('Warning','Data not inserted!')
+            backend_cur.normal_mode_submitter()
+            if backend_cur.normal_mode_submitter()==True:
+                ui_message_api().info_msg('Success!','Data Inserted correctly!')
+            else:
+                ui_message_api().warning_msg('Warning','Data not inserted!')
         
         
 
@@ -173,7 +175,7 @@ class ui_message_api():
         return True
     
     def ask_message_box(self,title:str,text:str)->True:
-        msg_box = QMessageBox(QMessageBox.Icon.Question,{title},{text})
+        msg_box = QMessageBox(QMessageBox.Icon.Question,title,text)
         msg_box.addButton(QMessageBox.StandardButton.Yes)
         msg_box.addButton(QMessageBox.StandardButton.No)
         return msg_box.exec()

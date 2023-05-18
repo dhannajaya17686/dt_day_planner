@@ -1,7 +1,8 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QMenu,QMenuBar, QWidget, QVBoxLayout,QDialog,QLineEdit
 from PyQt6.QtGui import QPixmap,QAction,QIcon
-
+from backend_core import Backend_core_module
+backend_cur=Backend_core_module()
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -76,6 +77,9 @@ class MainWindow(QMainWindow):
         about_dialog.exec()
 
 if __name__ == "__main__":
+    backend_cur.resources_checker()
+    backend_cur.normal_mode_table_creator()
+    backend_cur.advanced_mode_creator()
     app = QApplication(sys.argv)
     window = MainWindow()
     sys.exit(app.exec())
