@@ -25,6 +25,7 @@ class Backend_core_module:
         """
         self.DATABASE_NAME="day_planner.db"
         self.HOUR_LIST=[f"hour_{i}_00" for i in range (24)]
+        self.HOUR_LIST_RAW=[f"{i}:00" for i in range (24)]
         self.IMAGE_PATH="images"
         self.IMAGE_DASH="images/dashboard_image.png"
         self.IMAGE_ICON="images/time.png"
