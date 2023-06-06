@@ -197,11 +197,16 @@ class Backend_core_module:
         self.tomorrow_check=f"SELECT * from {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"      
         self.db_cursor.execute(self.tomorrow_check)
         self.db_connection.commit()
-        return True
+        self.results=self.db_cursor.fetchall()
+        if self.results:
+            return True
+        else:
+            return False
+        
     
     def tomorrow_remover(self):
-        self.tomorrow_remover=f"DELETE FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"
-        self.db_cursor.execute(self.tomorrow_remover)
+        self.tomorrow_remover_exec=f"DELETE FROM {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"
+        self.db_cursor.execute(self.tomorrow_remover_exec)
         self.db_connection.commit()
         return True
 
