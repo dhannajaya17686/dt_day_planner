@@ -1,7 +1,8 @@
-import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout, QLabel, QLineEdit, QPushButton,QDialog,QMessageBox,QVBoxLayout,QCalendarWidget
+from PyQt6.QtWidgets import QGridLayout, QLabel, QLineEdit, QPushButton,QDialog,QMessageBox,QVBoxLayout,QCalendarWidget
 from PyQt6.QtCore import QDate
 from backend_core import Backend_core_module
+
+
 backend_cur=Backend_core_module()
 class normal_mode_sub(QDialog):
 
@@ -11,6 +12,7 @@ class normal_mode_sub(QDialog):
         # Create the grid layout
         grid = QGridLayout()
         self.setLayout(grid)
+        self.setFixedSize(500,300)
 
         # Create three vertical columns of 8 rows by 6 columns each
         self.activities = {}
@@ -75,6 +77,7 @@ class advanced_mode_sub(QDialog):
         # Create the grid layout
         grid = QGridLayout()
         self.setLayout(grid)
+        self.setFixedSize(500,300)
 
         # Create three vertical columns of 8 rows by 6 columns each
         self.activities = {}
@@ -149,6 +152,7 @@ class DatePicker(QDialog):
         msg_box = QMessageBox(QMessageBox.Icon.Question, "Date conformation!", f"Would you like to select the date {self.selected_date.toString('yyyy-MM-dd')}?")
         msg_box.addButton(QMessageBox.StandardButton.Yes)
         msg_box.addButton(QMessageBox.StandardButton.No)
+        msg_box.setStyleSheet("background-color:#060d2e;color:#ffffff")
         reply = msg_box.exec()
         
         
@@ -161,6 +165,7 @@ class DatePicker(QDialog):
 class ui_message_api():
     def __init__(self):
         self.msg_obj=QMessageBox()
+        self.msg_obj.setStyleSheet("background-color:#060d2e;color:#ffffff")
     
     def info_msg(self,title:str,text:str)->True:
         self.msg_obj.setIcon(QMessageBox.Icon.Information)
@@ -187,6 +192,7 @@ class View_activity_today(QDialog):
     def __init__(self,parent=None):
         super().__init__(parent)
         self.initUI()
+
     
     def initUI(self):
         grid = QGridLayout()
@@ -210,4 +216,5 @@ class View_activity_today(QDialog):
 
         self.setLayout(grid)
         self.setWindowTitle('Activities for the day')
+        self.setStyleSheet("background-color:#060d2e;color:#ffffff")
         self.show()

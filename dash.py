@@ -11,6 +11,7 @@ class MainWindow(QMainWindow):
         # Set window properties
         self.setWindowTitle("DT DAY PLANNER")
         self.setGeometry(100, 100, 500, 210)
+        self.setFixedSize(500,220)
         self.setStyleSheet("background-color:#060d2e;color:#ffffff")
         self.app_icon=QIcon("images/time.png")
         self.setWindowIcon(self.app_icon)
