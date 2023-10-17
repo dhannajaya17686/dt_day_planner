@@ -81,6 +81,7 @@ if __name__ == "__main__":
     backend_cur.resources_checker()
     backend_cur.normal_mode_table_creator()
     backend_cur.advanced_mode_creator()
+    backend_cur.activity_list_table_creator()
     app = QApplication(sys.argv)
     window = MainWindow()
     sys.exit(app.exec())

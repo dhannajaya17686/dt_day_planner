@@ -34,6 +34,8 @@ class Backend_core_module:
         self.NORMAL_MODE_TABLE_NAME="normal_mode"
         self.DAY_COLUMN="date"
         self.ADVANCED_MODE_TABLE_NAME="advanced_mode"
+        self.ACTIVITY_TABLE_NAME="activity_list"
+        self.ACTIVITY_TABLE_COL= "activity"
         self.db_connection=sql.connect(self.DATABASE_NAME)
         self.db_cursor=self.db_connection.cursor()
         self.normal_mode_activity_dict={}
@@ -117,7 +119,32 @@ class Backend_core_module:
         self.db_cursor.execute(self.sql_query_normal_table_add)
         self.db_connection.commit()
         return True
+    
+    def activity_list_table_creator(self)->bool:
+        self.sql_query_activity_list_add=f"CREATE TABLE IF NOT EXISTS {self.ACTIVITY_TABLE_NAME}(activity_id INTEGER PRIMARY KEY AUTOINCREMENT,{self.ACTIVITY_TABLE_COL} CHAR(50) NOT NULL)"
+        self.db_cursor.execute(self.sql_query_activity_list_add)
+        self.db_connection.commit()
+        return True
 
+    def activity_submitter(self,activity_name:str) -> bool :
+        self.activity_table_add= f"INSERT INTO {self.ACTIVITY_TABLE_NAME} ({self.ACTIVITY_TABLE_COL}) VALUES ('{activity_name}');"
+        self.db_cursor.execute(self.activity_table_add)
+        self.db_connection.commit()
+        return True 
+    
+    def activity_return_list(self)->list:
+        self.activity_list=[]
+        self.get_all_activities=f"SELECT * FROM {self.ACTIVITY_TABLE_NAME};"
+        query_obj=self.db_cursor.execute(self.get_all_activities).fetchall()
+        for items in query_obj:
+            self.activity_list.append(items)
+        return self.activity_list
+    
+    def activity_checker(self,activity_name:str)->bool :
+        self.activity_check_query=f""
+    
+    
+    
     def advanced_mode_creator(self)->bool:
         """
         Creates a new table in the database for the advanced mode.
@@ -152,9 +179,7 @@ class Backend_core_module:
         self.db_cursor.execute(self.advanced_table_add)
         self.db_connection.commit()
         return True
-
-        
-    
+            
     def normal_mode_show(self)->list:
         """
         Retrieves all the records from the NORMAL_MODE_TABLE_NAME table for the current date and returns them as a list.
@@ -193,7 +218,7 @@ class Backend_core_module:
         current_date = QDate.currentDate()
         tomorrow_date = current_date.addDays(1)
         tomorrow_datetime = datetime.datetime(tomorrow_date.year(), tomorrow_date.month(), tomorrow_date.day())
-        self.tomorrow_string = tomorrow_datetime.strftime('%Y-%m-%d')
+        self.tomorrow_string = tomorrow_datetime.strfti
         self.tomorrow_check=f"SELECT * from {self.NORMAL_MODE_TABLE_NAME} WHERE {self.DAY_COLUMN}='{self.tomorrow_string}';"      
         self.db_cursor.execute(self.tomorrow_check)
         self.db_connection.commit()
@@ -224,6 +249,7 @@ class Backend_core_module:
         self.db_connection.commit()
         return True
     """
-    
-x=Backend_core_module()
 
+x=Backend_core_module()
+x.activity_submitter("Sleep")
+print(x.activity_return_list())
